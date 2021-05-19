@@ -1,4 +1,4 @@
-import 'package:covafrik/provider/countriesProv.dart';
+import 'package:covafrik/provider/statsProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,8 +10,8 @@ class Loading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final country = Provider.of<CountriesProv>(context);
-    country.getData(country.current);//getting data
+    final statsProvider = Provider.of<StatsProvider>(context);
+    statsProvider.getStats(statsProvider.currentData.country);//getting data
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 250),

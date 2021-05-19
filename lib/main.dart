@@ -1,5 +1,6 @@
-import 'package:covafrik/homePage/homePage.dart';
-import 'package:covafrik/provider/countriesProv.dart';
+
+import 'package:covafrik/provider/statsProvider.dart';
+import 'package:covafrik/views/homePage/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => CountriesProv())],
+      providers: [ChangeNotifierProvider(create: (context) => StatsProvider())],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: HomePage(),

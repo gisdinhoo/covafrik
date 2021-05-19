@@ -24,13 +24,14 @@ class CountriesProv with ChangeNotifier {
   //Variables
   //Variables
   String current = "Senegal";
-  List<String> currentData ;
+  List<String> currentData;
   bool load =
       true; // when is true, we're gonna call the Load widget wich will call geData function
 
   void changeCurrent(String value) {
     current = value;
   }
+
   void callLoadingScreen() {
     load = true;
     notifyListeners();
@@ -78,6 +79,8 @@ class CountriesProv with ChangeNotifier {
     http.Response response = await http.get(myUrl, headers: myHeaders);
     var data = jsonDecode(response.body);
     data = data["response"][0];
+    print(jsonDecode(response.body));
+    print(data);
 
     Map cases = data["cases"];
     Map deaths = data["deaths"];

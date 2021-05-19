@@ -1,8 +1,8 @@
-import 'package:covafrik/homePage/src/headClip.dart';
-import 'package:covafrik/homePage/src/searchAuto.dart';
-import 'package:covafrik/homePage/src/statistic.dart';
-import 'package:covafrik/loading/loading.dart';
-import 'package:covafrik/provider/countriesProv.dart';
+import 'package:covafrik/provider/statsProvider.dart';
+import 'package:covafrik/views/homePage/src/headClip.dart';
+import 'package:covafrik/views/homePage/src/searchAuto.dart';
+import 'package:covafrik/views/homePage/src/statistic.dart';
+import 'package:covafrik/views/loading/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -14,9 +14,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final country = Provider.of<CountriesProv>(context);
+    final statsProvider = Provider.of<StatsProvider>(context);
 
-    return country.load
+    return statsProvider.currentData.load
         ? Loading()
         : Scaffold(
             body: SingleChildScrollView(
@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SearchAuto(country: country),
+                  SearchAuto(statsProvider: statsProvider),
                   Padding(
                     padding: const EdgeInsets.only(left: 15, bottom: 15),
                     child: RichText(
@@ -61,7 +61,7 @@ class HomePage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               fontSize: 20)),
                       TextSpan(
-                          text: "Statistics of ${country.currentData[3]}",
+                          text: "Statistics of ${statsProvider.currentData.day}",
                           style: GoogleFonts.quicksand(
                               color: Colors.black, fontSize: 13))
                     ])),
@@ -84,17 +84,17 @@ class HomePage extends StatelessWidget {
                       children: [
                         Statistic(
                           color: Color(0xfff69b57),
-                          number: country.currentData[0],
+                          number: statsProvider.currentData.newCases,
                           text: "Infections",
                         ),
                         Statistic(
                           color: Color(0xff01bdbe),
-                          number: country.currentData[1],
+                          number: statsProvider.currentData.active,
                           text: "Actives",
                         ),
                         Statistic(
                           color: Color(0xfff81b4e),
-                          number: country.currentData[2],
+                          number: statsProvider.currentData.newDeaths,
                           text: "Deaths",
                         ),
                       ],
