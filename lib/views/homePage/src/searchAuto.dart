@@ -1,14 +1,14 @@
-import 'package:covafrik/provider/statsProvider.dart';
+import 'package:covafrik/controllers/statsController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class SearchAuto extends StatelessWidget {
   const SearchAuto({
     Key key,
-    @required this.statsProvider,
+    @required this.statsController,
   }) : super(key: key);
 
-  final StatsProvider statsProvider;
+  final StatsController statsController;
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +34,10 @@ class SearchAuto extends StatelessWidget {
                 borderSide: BorderSide(
                   color: Colors.grey,
                 )),
-            hintText: statsProvider.currentData.country,
+            hintText: statsController.getCurrentCountry(),
           ),
         ),
-        suggestionsCallback: (enteredText) => statsProvider.countries.where((item) {
+        suggestionsCallback: (enteredText) => statsController.getCountries().where((item) {
           if (enteredText.length < 1) return false;
           return item.toLowerCase().contains(enteredText.toLowerCase());
         }),
@@ -45,8 +45,8 @@ class SearchAuto extends StatelessWidget {
           title: Text(country),
         ),
         onSuggestionSelected: (String value) {
-          statsProvider.changeCurrent(value);
-          statsProvider.callLoadingScreen();
+          statsController.changeCurrent(value);
+          statsController.callLoadingScreen();
           //call the load screen and getData function
         },
         loadingBuilder: (_) => ListTile(

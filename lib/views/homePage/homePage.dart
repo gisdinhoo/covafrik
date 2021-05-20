@@ -1,8 +1,9 @@
-import 'package:covafrik/provider/statsProvider.dart';
+import 'package:covafrik/models/statsModel.dart';
+import 'package:covafrik/controllers/statsController.dart';
 import 'package:covafrik/views/homePage/src/headClip.dart';
 import 'package:covafrik/views/homePage/src/searchAuto.dart';
 import 'package:covafrik/views/homePage/src/statistic.dart';
-import 'package:covafrik/views/loading/loading.dart';
+import 'package:covafrik/views/loadingPage/loadingPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -14,10 +15,11 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final statsProvider = Provider.of<StatsProvider>(context);
+    final statsController = context.read<StatsController>();
+    context.watch<StatsModel>();
 
-    return statsProvider.currentData.load
-        ? Loading()
+    return statsController.currentData.load
+        ? LoadingPage()
         : Scaffold(
             body: SingleChildScrollView(
               child: Column(
@@ -33,13 +35,13 @@ class HomePage extends StatelessWidget {
                         children: [
                           Image.asset(
                             "assets/nurseTeam.jpg",
-                            //width: 300,
+                            
                             fit: BoxFit.contain,
                           ),
                           Positioned(
                               top: 100,
                               right: 15,
-                              //left: 320,
+                              
                               child: Text(
                                 "Stay Home\nStay Safe !",
                                 style: GoogleFonts.quicksand(
@@ -49,7 +51,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SearchAuto(statsProvider: statsProvider),
+                  SearchAuto(statsController: statsController),
                   Padding(
                     padding: const EdgeInsets.only(left: 15, bottom: 15),
                     child: RichText(
@@ -61,7 +63,8 @@ class HomePage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               fontSize: 20)),
                       TextSpan(
-                          text: "Statistics of ${statsProvider.currentData.day}",
+                          text:
+                              "Statistics of ${statsController.currentData.day}",
                           style: GoogleFonts.quicksand(
                               color: Colors.black, fontSize: 13))
                     ])),
@@ -84,17 +87,17 @@ class HomePage extends StatelessWidget {
                       children: [
                         Statistic(
                           color: Color(0xfff69b57),
-                          number: statsProvider.currentData.newCases,
+                          number: statsController.currentData.newCases,
                           text: "Infections",
                         ),
                         Statistic(
                           color: Color(0xff01bdbe),
-                          number: statsProvider.currentData.active,
+                          number: statsController.currentData.active,
                           text: "Actives",
                         ),
                         Statistic(
                           color: Color(0xfff81b4e),
-                          number: statsProvider.currentData.newDeaths,
+                          number: statsController.currentData.newDeaths,
                           text: "Deaths",
                         ),
                       ],

@@ -1,9 +1,17 @@
-class Statistics {
-  String newCases, active, newDeaths, day;
-  String country = "Senegal";
-  bool load = true;
-  Statistics({this.newCases, this.active, this.newDeaths, this.day});
+import 'package:flutter/cupertino.dart';
 
+class StatsModel with ChangeNotifier {
+  String newCases, active, newDeaths, day;  
+  bool load = true; // To know when to display loading screen
+
+  StatsModel({this.newCases, this.active, this.newDeaths, this.day});
+
+  void setLoad() {
+    this.load = true;
+    notifyListeners();
+  }
+
+  //Formate date
   String dateParse(DateTime date) {
     switch (date.month) {
       case 1:
@@ -35,7 +43,8 @@ class Statistics {
     }
   }
 
-  Statistics.fromJson(Map<String, dynamic> resp) {
+  //Create a custom constructer
+  void setAttributes(Map<String, dynamic> resp) {
     Map<String, dynamic> cases = resp["cases"];
     Map<String, dynamic> deaths = resp["deaths"];
 
@@ -45,5 +54,6 @@ class Statistics {
     day = dateParse(DateTime.parse(resp["day"])) +
         " " +
         (DateTime.parse(resp["day"]).day).toString();
+    notifyListeners();
   }
 }

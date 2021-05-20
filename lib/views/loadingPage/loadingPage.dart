@@ -1,17 +1,17 @@
-import 'package:covafrik/provider/statsProvider.dart';
+import 'package:covafrik/controllers/statsController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class Loading extends StatelessWidget {
-  const Loading({Key key}) : super(key: key);
+class LoadingPage extends StatelessWidget {
+  const LoadingPage({Key key}) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
-    final statsProvider = Provider.of<StatsProvider>(context);
-    statsProvider.getStats(statsProvider.currentData.country);//getting data
+    final statsController = context.read<StatsController>();
+    statsController.getStats(statsController.getCurrentCountry());//getting data
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 250),
